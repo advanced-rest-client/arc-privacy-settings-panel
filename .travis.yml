@@ -6,13 +6,18 @@ addons:
   sauce_connect: true
 script:
 - npm run lint
-- polymer test --plugin sauce --job-name "arc-privacy-settings-panel:${TRAVIS_BRANCH}" --build-number=${TRAVIS_BUILD_NUMBER}
+- polymer test --plugin sauce --job-name "arc-privacy-settings-panel:${TRAVIS_BRANCH}"
+  --build-number=${TRAVIS_BUILD_NUMBER}
 cache:
   directories:
   - node_modules
 branches:
   only:
-    - stage
-    - develop
+  - stage
+  - develop
 after_success:
-  - node tasks/ci.js
+- node tasks/ci.js
+env:
+  global:
+  - secure: gv6n5r8aygjL4gl7gbTQgERGv/VN9Izq+uUefTc4ziqIiElBwAVEK6HVrXY6zVeqaA+0MCRlZAD5ZIoD42lIrnAxp0FhrJrG9gikSpSpSVt2vh4qmXOFut2xcSO88Aco4nm67aKOZKXosKLsEEIsOdytRtlxyRBqNngFPLtS9mcjvqTImEyq7pXg/eVMIA21XsngliHwsjqU4Gdeul+pS5YHTdtJXcGk5FK3kiMDVNVGsJ63ayC8jmLhsxrIWQye+Q3IKypKPxBrPum7IK9TPNyyK7yD0mq+bE70U4z8C4Vo92x1+KUWkkTeCvJ52wOmi7qn5jRcGWwsP8NbvvaA5ZV+qQ1uw1FPFBgoISJnn6TVgRtHggev9hhFrQWmo3dZcr7nJg1kAaStPqEo0IulV45398hLGsf7Su0YyQnEgtLtAYPGoM/w4rkIV5mmm1WRMz+UvwI+p7juXItTtH/CXG/XNyIloErXuxF+IosSJf+8z5YJndAx7fA07NW4r3xVCmooXjxLcxTEhlTi4qpqBi7lDprkDlKzrlI9QGiEDQb0+zEE1XMOuDqMeap/G96T5WUz2vG0QneSCxAxbBnIahyaowlzcYNxAXOJjyitqmf3mxRJEAgXsaw14Mfc+oiMMwBjBe8k0pw6pMp008A/EZD751MzqhXiJRhA5fEKTJ4=
+  - secure: AAlJGuAoCEdpNnHMHFd+pffj3vpFYcb5uWxuATWDLCdTAJ3sGeOHsFgetq2LzpcK7Aa0JxzaE4SI6lbUy/6Gvh1A0e2R/7wLQ+Gs/29btCQWSx+3zhcc/WHjwddkzXGvVHEb6WhrmytYfgWoyOM4Hl6a/sl9rUgv7NxsszPv2cFwsI5FoH+eKWI+UPwb/uL1t7nrjGvgEgLGF1kUBO9uKRLlz0P0U/fvf+d7A93m5PD87nB5CV46y6GRZwOzkqcWzcZpcgQywCl+kg5YTzOQvJNE+Iiff9qNc5O68Aqqx9AK8TNwX0XMinybsFgUkuuqrdepLkCRuFKdQeSJlg2ReDC85HtWQIp96B8NEdyXI8mPH9J1S3jeZ1qAikt6HLKXNeZ4sWLZH8dPhosXONvXgRi3r9SRfYzTPhUf8p1V7kbfSwKfDO0WQW2XO9yoNjC1gGVHnnaojS01sTDKhtZSGOYvVzIz5iI7h1S4HD9L66be/fRSKtBxPHOqnMm4WIPPJHDDPei5nZhUbNBLbBX5AOZGvCunNeGd9gCjulfQQGUkQX40k6V4W+BQfp5vuk4Bzr4QjQrMkT3xOucwueo1XNEGPYrRziVtqCP60K38I0ubNDhdK8i3A51V5nqdlWYlTxHP1wfio+BN2ijt2GaVF/1R74GjkQBk7byg8eWjlpY=
