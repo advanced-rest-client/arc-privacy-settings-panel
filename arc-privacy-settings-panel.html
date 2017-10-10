@@ -79,10 +79,10 @@ Custom property | Description | Default
           </div>
           <div secondary="true">Help us make ARC better by providing anonymous usage statistics.</div>
         </paper-item-body>
-        <paper-toggle-button data-action="ga-switch" on-tap="_gaTapped" checked="{{analyticsEnabled}}"></paper-toggle-button>
+        <paper-toggle-button data-action="ga-switch" checked="{{telemetry}}"></paper-toggle-button>
       </paper-item>
 
-      <paper-item class="clickable" on-tap="openPrivacyPolicy">
+      <paper-item class="clickable" on-tap="openPrivacyPolicy" data-action="privacy-policy">
         <paper-item-body>
           <div>Privacy policy</div>
         </paper-item-body>
@@ -95,7 +95,10 @@ Custom property | Description | Default
     is: 'arc-privacy-settings-panel',
     properties: {
       // If true then Google Analytics tracking is enabled.
-      analyticsEnabled: Boolean,
+      telemetry: {
+        type: Boolean,
+        notify: true
+      },
       // A link to the privacy policy
       privacyPolicyUrl: {
         type: String,
@@ -106,16 +109,26 @@ Custom property | Description | Default
         }
       }
     },
-    // Handler for the GA tracking tap
-    _gaTapped: function() {
-      this.fire('analytics-permitted-changed', {
-        permitted: Boolean(this.analyticsEnabled)
-      });
-    },
     // Opens privacy policy in a new window.
     openPrivacyPolicy: function() {
+      var event = this.fire('open-external-url', {
+        url: this.privacyPolicyUrl
+      }, {
+        cancelable: true
+      });
+      if (event.defaultPrevented) {
+        return;
+      }
       window.open(this.privacyPolicyUrl);
     }
+
+    /**
+     * Sends cancelable event to request to open a link externally in a browser.
+     * If the event is not handled then it uses native `window.open` function.
+     *
+     * @event open-external-url
+     * @param {String} url The URL to open.
+     */
   });
   </script>
 </dom-module>
