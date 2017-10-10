@@ -16,3 +16,9 @@ Custom property | Description | Default
 ----------------|-------------|----------
 `--arc-privacy-settings-panel` | Mixin applied to the element | `{}`
 
+
+
+### Events
+| Name | Description | Params |
+| --- | --- | --- |
+| open-external-url | Sends cancelable event to request to open a link externally in a browser. If the event is not handled then it uses native `window.open` function. | url **String** - The URL to open. |
