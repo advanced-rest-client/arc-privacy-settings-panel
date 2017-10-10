@@ -36,15 +36,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         element = fixture('basic');
       });
 
-      test('Tapping Google Analytics fires analytics-permitted-changed custom event', function() {
+      test('Tapping Google Analytics fires telemetry-changed custom event', function() {
         var eventData;
-        element.addEventListener('analytics-permitted-changed', function(e) {
+        element.addEventListener('telemetry-changed', function clb(e) {
+          element.removeEventListener('telemetry-changed', clb);
           eventData = e.detail;
         });
         var node = Polymer.dom(element.root).querySelector('[data-action="ga-switch"]');
         MockInteractions.tap(node);
         assert.typeOf(eventData, 'object', 'Event has been fired');
-        assert.isTrue(eventData.permitted, 'permitted is true');
+        assert.isTrue(eventData.value, 'permitted is true');
+      });
+
+      test('Sends open-external-url custom event', function() {
+        var eventData;
+        element.addEventListener('open-external-url', function clb(e) {
+          element.removeEventListener('open-external-url', clb);
+          eventData = e.detail;
+          e.preventDefault();
+        });
+        // Note, this test will fail if window.open  is called because sauce
+        // browser will loose focus and tests will never finish
+        // so this also tests event cancelation.
+        var node = Polymer.dom(element.root).querySelector('[data-action="privacy-policy"]');
+        MockInteractions.tap(node);
+        assert.typeOf(eventData, 'object', 'Event has been fired');
+        assert.equal(eventData.url, element.privacyPolicyUrl, 'URL is set');
       });
     });
     </script>
