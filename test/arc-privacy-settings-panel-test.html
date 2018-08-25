@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <title>arc-privacy-settings-panel test</title>
+  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+  <link rel="import" href="../arc-privacy-settings-panel.html">
+</head>
+<body>
+  <test-fixture id="Basic">
+    <template>
+      <arc-privacy-settings-panel></arc-privacy-settings-panel>
+    </template>
+  </test-fixture>
+
+  <script>
+  suite('arc-privacy-settings-panel', () => {
+    test('Toggles telemetry', (done) => {
+      const element = fixture('Basic');
+      flush(() => {
+        const node = element.shadowRoot.querySelectorAll('paper-item')[0];
+        MockInteractions.tap(node);
+        assert.isTrue(element.telemetry);
+        done();
+      });
+    });
+
+    test('Clicking pricancy policy send an event', (done) => {
+      const element = fixture('Basic');
+      flush(() => {
+        const node = element.shadowRoot.querySelectorAll('paper-item')[1];
+        let called = false;
+        element.addEventListener('open-external-url', (e) => {
+          e.preventDefault();
+          called = true;
+        });
+        MockInteractions.tap(node);
+        assert.isTrue(called);
+        done();
+      });
+    });
+  });
+  </script>
+</body>
+</html>
