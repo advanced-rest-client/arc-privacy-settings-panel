@@ -7,10 +7,19 @@
   <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../iron-test-helpers/mock-interactions.js"></script>
+  <link rel="import" href="../../arc-local-store-preferences/arc-local-store-preferences.html">
   <link rel="import" href="../arc-privacy-settings-panel.html">
 </head>
 <body>
+  <arc-local-store-preferences></arc-local-store-preferences>
+  
   <test-fixture id="Basic">
+    <template>
+      <arc-privacy-settings-panel manual></arc-privacy-settings-panel>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="Auto">
     <template>
       <arc-privacy-settings-panel></arc-privacy-settings-panel>
     </template>
@@ -28,7 +37,7 @@
       });
     });
 
-    test('Clicking pricancy policy send an event', (done) => {
+    test('Clicking privancy policy sends an event', (done) => {
       const element = fixture('Basic');
       flush(() => {
         const node = element.shadowRoot.querySelectorAll('paper-item')[1];
@@ -40,6 +49,41 @@
         MockInteractions.tap(node);
         assert.isTrue(called);
         done();
+      });
+    });
+
+    suite('Auto reading settings', () => {
+      let element;
+      setup(() => {
+        const node = document.querySelector('arc-local-store-preferences');
+        node.clear();
+      });
+
+      teardown(() => {
+        const node = document.querySelector('arc-local-store-preferences');
+        node.clear();
+      });
+
+      test('Dispatches settings-read', (done) => {
+        window.addEventListener('settings-read', function f() {
+          window.removeEventListener('settings-read', f);
+          done();
+        });
+        element = fixture('Auto');
+      });
+
+      test('Do not dispatches settings-changed when restoring data', (done) => {
+        let called = false;
+        const f = function() {
+          called = true;
+        };
+        element = fixture('Auto');
+        element.addEventListener('settings-changed', f);
+        setTimeout(() => {
+          element.removeEventListener('settings-changed', f);
+          assert.isFalse(called);
+          done();
+        }, 500);
       });
     });
   });

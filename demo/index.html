@@ -12,6 +12,7 @@
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../arc-electron-default-theme/arc-electron-default-theme.html">
+  <link rel="import" href="../../arc-local-store-preferences/arc-local-store-preferences.html">
   <link rel="import" href="../arc-privacy-settings-panel.html">
   <style>
   body,
@@ -33,7 +34,8 @@
 <body unresolved>
   <dom-bind id="demo">
     <template is="dom-bind">
-      <div class="vertical-section-container centered">
+      <arc-local-store-preferences></arc-local-store-preferences>
+      <div class="centered">
         <arc-privacy-settings-panel></arc-privacy-settings-panel>
       </div>
     </template>

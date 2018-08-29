@@ -19,6 +19,7 @@ the License.
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../arc-icons/arc-icons.html">
 <link rel="import" href="../paper-styles/shadow.html">
+<link rel="import" href="../arc-settings-panel-mixin/arc-settings-panel-mixin.html">
 <dom-module id="arc-privacy-settings-panel">
   <template>
     <style>
@@ -96,15 +97,17 @@ the License.
    * @polymer
    * @demo demo/index.html
    * @memberof ApiElements
+   * @appliesMixin ArcComponents.ArcSettingsPanelMixin
    */
-  class ArcPrivacySettingsPanel extends Polymer.Element {
+  class ArcPrivacySettingsPanel extends ArcComponents.ArcSettingsPanelMixin(Polymer.Element) {
     static get is() {return 'arc-privacy-settings-panel';}
     static get properties() {
       return {
         // If true then Google Analytics tracking is enabled.
         telemetry: {
           type: Boolean,
-          notify: true
+          notify: true,
+          observer: '_telemetryChanged'
         },
         // A link to the privacy policy
         privacyPolicyUrl: {
@@ -118,40 +121,29 @@ the License.
       };
     }
 
-    _toggleOption(e) {
-      const button = e.currentTarget.querySelector('paper-toggle-button');
-      button.checked = !button.checked;
-    }
-
-    _cancelEvent(e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-
     // Opens privacy policy in a new window.
     openPrivacyPolicy() {
-      const e = new CustomEvent('open-external-url', {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-        detail: {
-          url: this.privacyPolicyUrl
-        }
-      });
-      this.dispatchEvent(e);
-      if (e.defaultPrevented) {
-        return;
-      }
-      window.open(this.privacyPolicyUrl);
+      this._openLink(this.privacyPolicyUrl);
     }
 
-    /**
-     * Sends cancelable event to request to open a link externally in a browser.
-     * If the event is not handled then it uses native `window.open` function.
-     *
-     * @event open-external-url
-     * @param {String} url The URL to open.
-     */
+    _processValues(values) {
+      if (typeof values.telemetry === 'undefined') {
+        values.telemetry = true;
+      } else {
+        values.telemetry = this._boolValue(values.telemetry);
+      }
+      return values;
+    }
+
+    _setSettings(values) {
+      this.__settingsRestored = false;
+      this.telemetry = values.telemetry;
+      this.__settingsRestored = true;
+    }
+
+     _telemetryChanged(value) {
+       this.updateSetting('telemetry', value);
+     }
   }
   window.customElements.define(ArcPrivacySettingsPanel.is, ArcPrivacySettingsPanel);
   </script>
