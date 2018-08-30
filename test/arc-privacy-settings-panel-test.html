@@ -12,7 +12,7 @@
 </head>
 <body>
   <arc-local-store-preferences></arc-local-store-preferences>
-  
+
   <test-fixture id="Basic">
     <template>
       <arc-privacy-settings-panel manual></arc-privacy-settings-panel>
@@ -84,6 +84,34 @@
           assert.isFalse(called);
           done();
         }, 500);
+      });
+    });
+
+    suite('_settingsChanged()', () => {
+      let element;
+      setup((done) => {
+        element = fixture('Basic');
+        flush(() => done());
+      });
+      function fire(name, value) {
+        const ev = new CustomEvent('settings-changed', {
+          cancelable: false,
+          composed: true,
+          bubbles: true,
+          detail: {
+            name,
+            value
+          }
+        });
+        document.body.dispatchEvent(ev);
+      }
+      [
+        ['telemetry', true]
+      ].forEach((item) => {
+        test(`Updates value for ${item[0]}`, function() {
+          fire(item[0], item[1]);
+          assert.strictEqual(element[item[0]], item[1]);
+        });
       });
     });
   });

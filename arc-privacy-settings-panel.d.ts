@@ -16,8 +16,9 @@
 /// <reference path="../iron-flex-layout/iron-flex-layout.d.ts" />
 /// <reference path="../arc-icons/arc-icons.d.ts" />
 /// <reference path="../paper-styles/shadow.d.ts" />
+/// <reference path="../arc-settings-panel-mixin/arc-settings-panel-mixin.d.ts" />
 
-declare namespace ApiElements {
+declare namespace UiElements {
 
   /**
    * Privacy settings panel for Advanced REST Client
@@ -34,7 +35,9 @@ declare namespace ApiElements {
    * `--arc-settings-panel-icon-color` | Settings panel icon color | `rgba(0, 0, 0, 0.34)`
    * `--arc-font-subhead` | Mixin applied to the section headers | `{}`
    */
-  class ArcPrivacySettingsPanel extends Polymer.Element {
+  class ArcPrivacySettingsPanel extends
+    ArcComponents.ArcSettingsPanelMixin(
+    Polymer.Element) {
 
     /**
      * If true then Google Analytics tracking is enabled.
@@ -45,16 +48,18 @@ declare namespace ApiElements {
      * A link to the privacy policy
      */
     privacyPolicyUrl: string|null|undefined;
-    _toggleOption(e: any): void;
-    _cancelEvent(e: any): void;
+    _processValues(values: any): any;
+    _setSettings(values: any): void;
 
     /**
      * Opens privacy policy in a new window.
      */
     openPrivacyPolicy(): void;
+    _telemetryChanged(value: any): void;
+    _settingsChanged(key: any, value: any): void;
   }
 }
 
 interface HTMLElementTagNameMap {
-  "arc-privacy-settings-panel": ApiElements.ArcPrivacySettingsPanel;
+  "arc-privacy-settings-panel": UiElements.ArcPrivacySettingsPanel;
 }
