@@ -20,43 +20,16 @@ the License.
 <link rel="import" href="../arc-icons/arc-icons.html">
 <link rel="import" href="../paper-styles/shadow.html">
 <link rel="import" href="../arc-settings-panel-mixin/arc-settings-panel-mixin.html">
+<link rel="import" href="../arc-settings-panel-mixin/arc-settings-panel-styles.html">
 <dom-module id="arc-privacy-settings-panel">
   <template>
-    <style>
+    <style include="arc-settings-panel-styles">
     :host {
       display: block;
       @apply --arc-privacy-settings-panel;
     }
-
-    h2 {
-      @apply --arc-font-subhead;
-      @apply --layout-horizontal;
-      @apply --layout-center;
-      color: var(--arc-settings-panel-header-color);
-      @apply --arc-settings-panel-header;
-    }
-
-    iron-icon {
-      color: var(--arc-settings-panel-icon-color, rgba(0, 0, 0, 0.34));
-      width: 24px;
-      height: 24px;
-    }
-
-    .nav-away-icon {
-      transform: rotate(-90deg);
-    }
-
-    .clickable {
-      cursor: pointer;
-    }
-
-    .card {
-      padding: 12px;
-      border-radius: 4px;
-      @apply --shadow-elevation-4dp;
-    }
     </style>
-    <h2>Account and privacy</h2>
+    <h2 class="panel-title">Account and privacy</h2>
     <section class="card">
       <paper-item class="clickable" on-click="_toggleOption">
         <paper-item-body two-line>
@@ -73,7 +46,7 @@ the License.
           <div>Privacy policy</div>
           <div secondary="true">Opens application privacy policy in a browser.</div>
         </paper-item-body>
-        <iron-icon icon="arc:open-in-new" item-icon></iron-icon>
+        <iron-icon icon="arc:open-in-new" class="panel-icon" item-icon></iron-icon>
       </paper-item>
     </section>
   </template>
