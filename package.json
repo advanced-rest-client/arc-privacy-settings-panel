@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "description": "A privacy control settings panel",
   "devDependencies": {
-    "@polymer/gen-typescript-declarations": "^1.5.1"
+    "@polymer/gen-typescript-declarations": "^1.6.1"
   },
   "private": false,
   "main": "arc-privacy-settings-panel.html",
