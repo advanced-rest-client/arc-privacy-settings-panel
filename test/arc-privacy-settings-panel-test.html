@@ -115,6 +115,44 @@
       });
     });
   });
+
+  suite('_processValues()', () => {
+    let element;
+    setup(() => {
+      element = fixture('Basic');
+    });
+    [
+      ['telemetry', undefined, true],
+      ['telemetry', true, true],
+      ['telemetry', false, false],
+      ['telemetry', 'false', false]
+    ].forEach((item) => {
+      test(`Sets value of ${item[0]} when ${item[1]}`, () => {
+        const values = {};
+        values[item[0]] = item[1];
+        element._processValues(values);
+        assert.equal(values[item[0]], item[2]);
+      });
+    });
+  });
+
+  suite('_setSettings()', () => {
+    let element;
+    setup(() => {
+      element = fixture('Basic');
+    });
+
+    [
+      ['telemetry', true],
+    ].forEach((item) => {
+      test(`Sets value of ${item[0]}`, () => {
+        const values = {};
+        values[item[0]] = item[1];
+        element._setSettings(values);
+        assert.equal(element[item[0]], item[1]);
+      });
+    });
+  });
   </script>
 </body>
 </html>
