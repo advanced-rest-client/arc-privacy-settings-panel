@@ -24,3 +24,25 @@
 
 
 
+# [2.0.0](https://github.com/advanced-rest-client/arc-privacy-settings-panel/compare/0.2.1...2.0.0) (2019-01-29)
+
+
+### Breaking
+
+* Bumping version ([2173d88fa4164ccb60fe769830522cc1d59d993e](https://github.com/advanced-rest-client/arc-privacy-settings-panel/commit/2173d88fa4164ccb60fe769830522cc1d59d993e))
+
+### Docs
+
+* Updating polymer docs and typpings ([be9aa2bf9fdfabed0c79400c2ec4ed3f1ab9f9b5](https://github.com/advanced-rest-client/arc-privacy-settings-panel/commit/be9aa2bf9fdfabed0c79400c2ec4ed3f1ab9f9b5))
+
+### New
+
+* Adding test coverage ([aeea4116bc64245951efcbda0987ca8c12eee92a](https://github.com/advanced-rest-client/arc-privacy-settings-panel/commit/aeea4116bc64245951efcbda0987ca8c12eee92a))
+
+### Update
+
+* Adding settings mixin ([5b6890d937235cc48a5ae569f0984de567adfc6b](https://github.com/advanced-rest-client/arc-privacy-settings-panel/commit/5b6890d937235cc48a5ae569f0984de567adfc6b))
+* Updating dependencies ([96a76682d7992a8bba00e1362386492161ea0da3](https://github.com/advanced-rest-client/arc-privacy-settings-panel/commit/96a76682d7992a8bba00e1362386492161ea0da3))
+
+
+
