@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright 2016 The Advanced REST client authors <arc@mulesoft.com>
+Copyright 2018 The Advanced REST client authors <arc@mulesoft.com>
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
 the License at
@@ -12,123 +12,122 @@ License for the specific language governing permissions and limitations under
 the License.
 -->
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-item/paper-item-body.html">
 <link rel="import" href="../paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../arc-icons/arc-icons.html">
-<!--
-`<arc-privacy-settings-panel>` A privacy control settings panel
-
-### Example
-```
-<arc-privacy-settings-panel></arc-privacy-settings-panel>
-```
-
-### Styling
-`<arc-privacy-settings-panel>` provides the following custom properties and mixins for styling:
-
-Custom property | Description | Default
-----------------|-------------|----------
-`--arc-privacy-settings-panel` | Mixin applied to the element | `{}`
-
-@group UI Elements
-@element arc-privacy-settings-panel
-@demo demo/index.html
--->
+<link rel="import" href="../paper-styles/shadow.html">
+<link rel="import" href="../arc-settings-panel-mixin/arc-settings-panel-mixin.html">
+<link rel="import" href="../arc-settings-panel-mixin/arc-settings-panel-styles.html">
 <dom-module id="arc-privacy-settings-panel">
   <template>
-    <style>
+    <style include="arc-settings-panel-styles">
     :host {
       display: block;
       @apply --arc-privacy-settings-panel;
     }
-
-    h2 {
-      @apply --arc-font-subhead;
-      @apply --layout-horizontal;
-      @apply --layout-center;
-      height: 48px;
-      color: var(--arc-settings-panel-header-color, --accent-color);
-      margin: 0;
-      @apply --arc-settings-panel-header;
-    }
-
-    iron-icon {
-      color: var(--arc-settings-panel-icon-color, rgba(0, 0, 0, 0.34));
-      width: 24px;
-      height: 24px;
-    }
-
-    .nav-away-icon {
-      transform: rotate(-90deg);
-    }
-
-    .clickable {
-      cursor: pointer;
-    }
     </style>
-    <h2>Account and privacy</h2>
-    <paper-material elevation="1">
-      <paper-item>
+    <h2 class="panel-title">Account and privacy</h2>
+    <section class="card">
+      <paper-item class="clickable" on-click="_toggleOption">
         <paper-item-body two-line>
           <div>
             Send anonymous usage data
           </div>
           <div secondary="true">Help us make ARC better by providing anonymous usage statistics.</div>
         </paper-item-body>
-        <paper-toggle-button data-action="ga-switch" checked="{{telemetry}}"></paper-toggle-button>
+        <paper-toggle-button on-click="_cancelEvent" data-action="ga-switch" tabindex="-1" checked="{{telemetry}}"></paper-toggle-button>
       </paper-item>
 
-      <paper-item class="clickable" on-tap="openPrivacyPolicy" data-action="privacy-policy">
-        <paper-item-body>
+      <paper-item class="clickable" on-click="openPrivacyPolicy" data-action="privacy-policy">
+        <paper-item-body two-line>
           <div>Privacy policy</div>
+          <div secondary="true">Opens application privacy policy in a browser.</div>
         </paper-item-body>
-        <iron-icon icon="arc:open-in-new" item-icon></iron-icon>
+        <iron-icon icon="arc:open-in-new" class="panel-icon" item-icon></iron-icon>
       </paper-item>
-    </paper-material>
+    </section>
   </template>
   <script>
-  Polymer({
-    is: 'arc-privacy-settings-panel',
-    properties: {
-      // If true then Google Analytics tracking is enabled.
-      telemetry: {
-        type: Boolean,
-        notify: true
-      },
-      // A link to the privacy policy
-      privacyPolicyUrl: {
-        type: String,
-        value: function() {
-          let url = 'https://docs.google.com/document/d/';
-          url += '1BzrKQ0NxFXuDIe2zMA-0SZBNU0P46MHr4GftZmoLUQU/edit';
-          return url;
+  /**
+   * Privacy settings panel for Advanced REST Client
+   *
+   * ## Styling
+   *
+   * `<arc-privacy-settings-panel>` provides the following custom properties and mixins for styling:
+   *
+   * Custom property | Description | Default
+   * ----------------|-------------|----------
+   * `--arc-request-settings-panel` | Mixin applied to this elment | `{}`
+   * `--arc-settings-panel-header` | Mixin applied to settings panel header | `{}`
+   * `--arc-settings-panel-header-color` | Color of the settings panel header | `--accent-color`
+   * `--arc-settings-panel-icon-color` | Settings panel icon color | `rgba(0, 0, 0, 0.34)`
+   * `--arc-font-subhead` | Mixin applied to the section headers | `{}`
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   * @memberof UiElements
+   * @appliesMixin ArcComponents.ArcSettingsPanelMixin
+   */
+  class ArcPrivacySettingsPanel extends ArcComponents.ArcSettingsPanelMixin(Polymer.Element) {
+    static get is() {return 'arc-privacy-settings-panel';}
+    static get properties() {
+      return {
+        // If true then Google Analytics tracking is enabled.
+        telemetry: {
+          type: Boolean,
+          notify: true,
+          observer: '_telemetryChanged'
+        },
+        // A link to the privacy policy
+        privacyPolicyUrl: {
+          type: String,
+          value: function() {
+            let url = 'https://docs.google.com/document/d/';
+            url += '1BzrKQ0NxFXuDIe2zMA-0SZBNU0P46MHr4GftZmoLUQU/edit';
+            return url;
+          }
         }
-      }
-    },
-    // Opens privacy policy in a new window.
-    openPrivacyPolicy: function() {
-      var event = this.fire('open-external-url', {
-        url: this.privacyPolicyUrl
-      }, {
-        cancelable: true
-      });
-      if (event.defaultPrevented) {
-        return;
-      }
-      window.open(this.privacyPolicyUrl);
+      };
     }
 
-    /**
-     * Sends cancelable event to request to open a link externally in a browser.
-     * If the event is not handled then it uses native `window.open` function.
-     *
-     * @event open-external-url
-     * @param {String} url The URL to open.
-     */
-  });
+    // Opens privacy policy in a new window.
+    openPrivacyPolicy() {
+      this._openLink(this.privacyPolicyUrl);
+    }
+
+    _processValues(values) {
+      if (typeof values.telemetry === 'undefined') {
+        values.telemetry = true;
+      } else {
+        values.telemetry = this._boolValue(values.telemetry);
+      }
+      return values;
+    }
+
+    _setSettings(values) {
+      this.__settingsRestored = false;
+      this.telemetry = values.telemetry;
+      this.__settingsRestored = true;
+    }
+
+     _telemetryChanged(value) {
+       this.updateSetting('telemetry', value);
+     }
+
+     _settingsChanged(key, value) {
+      this.__settingsRestored = false;
+      switch (key) {
+        case 'telemetry':
+          this[key] = value;
+          break;
+      }
+      this.__settingsRestored = true;
+    }
+  }
+  window.customElements.define(ArcPrivacySettingsPanel.is, ArcPrivacySettingsPanel);
   </script>
 </dom-module>
