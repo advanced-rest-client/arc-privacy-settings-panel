@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
   <title>arc-privacy-settings-panel test</title>
-  <script src="../../webcomponentsjs/webcomponents-loader.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
-  <link rel="import" href="../../arc-local-store-preferences/arc-local-store-preferences.html">
-  <link rel="import" href="../arc-privacy-settings-panel.html">
+  <script src="../../../@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../../../wct-browser-legacy/browser.js"></script>
+  <script src="../../../@polymer/iron-test-helpers/mock-interactions.js" type="module"></script>
+  <script type="module" src="../../../arc-local-store-preferences/arc-local-store-preferences.js"></script>
+  <script type="module" src="../arc-privacy-settings-panel.js"></script>
 </head>
 <body>
   <arc-local-store-preferences></arc-local-store-preferences>
@@ -25,7 +25,9 @@
     </template>
   </test-fixture>
 
-  <script>
+  <script type="module">
+  import '../../../arc-local-store-preferences/arc-local-store-preferences.js';
+  import '../arc-privacy-settings-panel.js';
   suite('arc-privacy-settings-panel', () => {
     test('Toggles telemetry', (done) => {
       const element = fixture('Basic');
