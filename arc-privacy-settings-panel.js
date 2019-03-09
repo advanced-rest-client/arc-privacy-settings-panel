@@ -11,19 +11,18 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 License for the specific language governing permissions and limitations under
 the License.
 */
-import '../../@polymer/polymer/polymer-legacy.js';
-
-import '../../@polymer/paper-item/paper-item.js';
-import '../../@polymer/paper-item/paper-item-body.js';
-import '../../@polymer/paper-toggle-button/paper-toggle-button.js';
-import '../../@polymer/iron-icon/iron-icon.js';
-import '../../@polymer/iron-flex-layout/iron-flex-layout.js';
-import '../../arc-icons/arc-icons.js';
-import '../../@polymer/paper-styles/shadow.js';
-import '../../arc-settings-panel-mixin/arc-settings-panel-mixin.js';
-import '../../arc-settings-panel-mixin/arc-settings-panel-styles.js';
-import { html } from '../../@polymer/polymer/lib/utils/html-tag.js';
-import { PolymerElement } from '../../@polymer/polymer/polymer-element.js';
+import '@polymer/polymer/polymer-legacy.js';
+import '@polymer/paper-item/paper-item.js';
+import '@polymer/paper-item/paper-item-body.js';
+import '@polymer/paper-toggle-button/paper-toggle-button.js';
+import '@polymer/iron-icon/iron-icon.js';
+import '@polymer/iron-flex-layout/iron-flex-layout.js';
+import '@advanced-rest-client/arc-icons/arc-icons.js';
+import '@polymer/paper-styles/shadow.js';
+import {ArcSettingsPanelMixin} from '@advanced-rest-client/arc-settings-panel-mixin/arc-settings-panel-mixin.js';
+import '@advanced-rest-client/arc-settings-panel-mixin/arc-settings-panel-styles.js';
+import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 /**
  * Privacy settings panel for Advanced REST Client
  *
@@ -43,9 +42,9 @@ import { PolymerElement } from '../../@polymer/polymer/polymer-element.js';
  * @polymer
  * @demo demo/index.html
  * @memberof UiElements
- * @appliesMixin ArcComponents.ArcSettingsPanelMixin
+ * @appliesMixin ArcSettingsPanelMixin
  */
-class ArcPrivacySettingsPanel extends ArcComponents.ArcSettingsPanelMixin(PolymerElement) {
+export class ArcPrivacySettingsPanel extends ArcSettingsPanelMixin(PolymerElement) {
   static get template() {
     return html`
     <style include="arc-settings-panel-styles">
@@ -63,7 +62,11 @@ class ArcPrivacySettingsPanel extends ArcComponents.ArcSettingsPanelMixin(Polyme
           </div>
           <div secondary="true">Help us make ARC better by providing anonymous usage statistics.</div>
         </paper-item-body>
-        <paper-toggle-button on-click="_cancelEvent" data-action="ga-switch" tabindex="-1" checked="{{telemetry}}"></paper-toggle-button>
+        <paper-toggle-button
+          on-click="_cancelEvent"
+          data-action="ga-switch"
+          tabindex="-1"
+          checked="{{telemetry}}"></paper-toggle-button>
       </paper-item>
 
       <paper-item class="clickable" on-click="openPrivacyPolicy" data-action="privacy-policy">
@@ -77,7 +80,6 @@ class ArcPrivacySettingsPanel extends ArcComponents.ArcSettingsPanelMixin(Polyme
 `;
   }
 
-  static get is() {return 'arc-privacy-settings-panel';}
   static get properties() {
     return {
       // If true then Google Analytics tracking is enabled.
@@ -132,4 +134,4 @@ class ArcPrivacySettingsPanel extends ArcComponents.ArcSettingsPanelMixin(Polyme
    this.__settingsRestored = true;
  }
 }
-window.customElements.define(ArcPrivacySettingsPanel.is, ArcPrivacySettingsPanel);
+window.customElements.define('arc-privacy-settings-panel', ArcPrivacySettingsPanel);

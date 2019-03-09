@@ -4,11 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
   <title>arc-privacy-settings-panel test</title>
-  <script src="../../../@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-  <script src="../../../wct-browser-legacy/browser.js"></script>
-  <script src="../../../@polymer/iron-test-helpers/mock-interactions.js" type="module"></script>
-  <script type="module" src="../../../arc-local-store-preferences/arc-local-store-preferences.js"></script>
-  <script type="module" src="../arc-privacy-settings-panel.js"></script>
+
+  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script src="../node_modules/@polymer/test-fixture/test-fixture.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../node_modules/wct-mocha/wct-mocha.js"></script>
+
 </head>
 <body>
   <arc-local-store-preferences></arc-local-store-preferences>
@@ -26,14 +28,16 @@
   </test-fixture>
 
   <script type="module">
-  import '../../../arc-local-store-preferences/arc-local-store-preferences.js';
+  import '../../../@advanced-rest-client/arc-local-store-preferences/arc-local-store-preferences.js';
   import '../arc-privacy-settings-panel.js';
+  import {tap} from '../../../@polymer/iron-test-helpers/mock-interactions.js';
+
   suite('arc-privacy-settings-panel', () => {
     test('Toggles telemetry', (done) => {
       const element = fixture('Basic');
       flush(() => {
         const node = element.shadowRoot.querySelectorAll('paper-item')[0];
-        MockInteractions.tap(node);
+        tap(node);
         assert.isTrue(element.telemetry);
         done();
       });
@@ -48,7 +52,7 @@
           e.preventDefault();
           called = true;
         });
-        MockInteractions.tap(node);
+        tap(node);
         assert.isTrue(called);
         done();
       });

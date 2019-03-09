@@ -12,6 +12,8 @@
   "version": "3.0.0-preview.1",
   "license": "Apache-2.0",
   "devDependencies": {
+    "@advanced-rest-client/arc-electron-default-theme": "^3.0.0-preview",
+    "@advanced-rest-client/arc-local-store-preferences": "^3.0.0-preview",
     "@polymer/gen-typescript-declarations": "^1.6.1",
     "@polymer/iron-component-page": "^4.0.0",
     "@polymer/iron-demo-helpers": "^3.0.0",
@@ -44,6 +46,8 @@
     "The Advanced REST client authors <arc@mulesoft.com>"
   ],
   "dependencies": {
+    "@advanced-rest-client/arc-icons": "^3.0.0-preview",
+    "@advanced-rest-client/arc-settings-panel-mixin": "^3.0.0-preview",
     "@polymer/polymer": "^3.0.0",
     "@polymer/paper-item": "^3.0.0",
     "@polymer/iron-icon": "^3.0.0",
